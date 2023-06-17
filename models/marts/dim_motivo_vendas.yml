@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: dim_motivo_vendas
+    description: Essa é a dimensão de Motivo de Venda.
+    columns:
+      - name: venda_sk
+        description: Essa é a chave Surrogate key da tabela
+        tests:
+          - unique
+          - not_null
