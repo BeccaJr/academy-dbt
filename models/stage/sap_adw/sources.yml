@@ -16,21 +16,6 @@ sources:
               - unique
               - not_null
 
-          - name: customerid
-            description: Chave estrangeira para a tabela Customer.
-            tests:
-              - not_null
-
-          - name: creditcardid
-            description: Chave estrangeira para a tabela CreditCard.
-            tests:
-              - not_null
-
-          - name: billtoaddressid
-            description: Chave estrangeira para a tabela Address.
-            tests:
-              - not_null
-      
       - name: salesorderheadersalesreason
         description: Tabela que relaciona as informações de venda e razão de vendas.
         columns:
@@ -71,16 +56,6 @@ sources:
               - unique
               - not_null
 
-          - name: salesorderid
-            description: Chave estrangeira para a tabela SalesOrderHeader.
-            tests:
-              - not_null
-
-          - name: productid
-            description: Chave estrangeira para a tabela Products.
-            tests:
-              - not_null
-
       - name: product
         description: Tabela com as informações de Produtos.
         columns:
@@ -98,11 +73,6 @@ sources:
             tests:
               - unique
               - not_null
-
-          - name: stateprovinceid
-            description: Chave estrangeira da tabela StateProvince.
-            tests:
-              - not_null
       
       - name: stateprovince
         description: Tabela com as informações de Estados.
@@ -111,11 +81,6 @@ sources:
             description: Chave primária da tabela StateProvince.
             tests:
               - unique
-              - not_null
-
-          - name: countryregioncode
-            description: Chave estrangeira da tabela CountryRegion.
-            tests:
               - not_null
 
       - name: countryregion
@@ -150,6 +115,24 @@ sources:
         columns:
           - name: businessentityid
             description: Chave primária da tabela Store.
+            tests:
+              - unique
+              - not_null
+
+      - name: productcategory
+        description: Tabela de categoria dos produtos.
+        columns:
+          - name: productcategoryid
+            description: Chave primária da tabela ProductCategory.
+            tests:
+              - unique
+              - not_null
+
+      - name: productsubcategory
+        description: Tabela de subcategoria dos produtos, liga a tabela de produtos com a de categorias.
+        columns:
+          - name: productsubcategoryid
+            description: Chave primária da tabela ProductSubcategory.
             tests:
               - unique
               - not_null
