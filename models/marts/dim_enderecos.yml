@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: dim_enderecos
+    description: Essa é a dimensão de Endereços.
+    columns:
+      - name: endereco_sk
+        description: Essa é a chave Surrogate key da tabela
+        tests:
+          - unique
+          - not_null
