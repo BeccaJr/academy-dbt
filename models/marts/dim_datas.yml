@@ -1,0 +1,17 @@
+version: 2
+
+models:
+  - name: dim_datas
+    description: Essa é a dimensão de datas.
+    columns:
+      - name: data_sk
+        description: Essa é a chave Surrogate key da tabela
+        tests:
+          - unique
+          - not_null
+
+      - name: dia_semana
+        description: Dia da semana, começando com o Domingo = 1.
+
+      - name: final_de_semana
+        description: Flag se o dia é final de semana ou não.
