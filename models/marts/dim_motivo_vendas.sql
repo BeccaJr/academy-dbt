@@ -4,24 +4,7 @@ with
             cast(venda_id as integer) as venda_sk
             , cast(motivo_venda_id as integer) as motivo_venda_id
         from
-            {{ ref('stg_adw__vendas_motivo_vendas') }} 
-            
-            /*
-            tem mais de um id por pedido -
-             granularidade order item - entender como arrumar isso - 
-             verificar order id = 51214
-             
-            select
-            *
-            from
-            `forward-bee-344114.sap_adw.salesorderdetail` a
-            inner join
-            `forward-bee-344114.sap_adw.salesorderheadersalesreason` b
-            on
-            a.salesorderid = b.salesorderid
-            where 
-            a.salesorderid = 51214
-            */
+            {{ ref('stg_adw__vendas_motivo_vendas') }}
     ),
 
     fonte_motivo_vendas as (

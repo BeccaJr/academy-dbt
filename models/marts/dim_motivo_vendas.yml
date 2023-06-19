@@ -5,7 +5,7 @@ models:
     description: Essa é a dimensão de Motivo de Venda.
     columns:
       - name: venda_sk
-        description: Essa é a chave Surrogate key da tabela
+        description: Essa é a chave Surrogate key da tabela. Obs, essa tabela não está com os ID únicos, pois um pedido está com mais de um motivo de venda.
         tests:
           - unique
           - not_null
