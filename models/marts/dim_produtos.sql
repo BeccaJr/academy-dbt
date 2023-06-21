@@ -1,7 +1,7 @@
 with
     produtos as (
         select
-            cast(produto_id as integer) as produto_sk
+            cast(produto_id as integer) as produto_id
             , cast(produto_subcategoria_id as integer) as produto_subcategoria_id
             , produto_nome
         from
@@ -36,7 +36,7 @@ with
 
     transformacoes as (
         select
-            p.produto_sk
+            farm_fingerprint(cast(p.produto_id as string)) as produto_sk
             , p.produto_nome
             , csc.subcategoria_nome
             , csc.categoria_nome

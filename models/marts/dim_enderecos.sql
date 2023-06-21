@@ -36,7 +36,8 @@ with
 
     transformacoes as (
         select
-            e.endereco_sk
+            farm_fingerprint(cast(e.endereco_sk as string)) as endereco_sk
+            , e.endereco_sk as endereco_id
             , e.cidade_nome
             , er.estado_nome
             , er.regiao_nome
