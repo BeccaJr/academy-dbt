@@ -8,7 +8,8 @@ with
 
     transformacoes as (
         select
-            cast(cartao_id as integer) as cartao_sk
+            farm_fingerprint(cast(cartao_id as string)) as cartao_sk
+            , cast(cartao_id as integer) as cartao_id
             , cast(cartao_tipo as string) as cartao_tipo
         from
             cartoes
