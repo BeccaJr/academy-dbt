@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: fact_vendas
+    description: Essa é a fato das vendas detalhadas.
+    columns:
+      - name: venda_detalhe_sk
+        description: Essa é a chave Surrogate key da tabela
+        tests:
+          - unique
+          - not_null
