@@ -19,6 +19,7 @@ with
     transformacoes as (
         select distinct
             farm_fingerprint(cast(vmv.venda_sk as string)) as venda_sk
+            , cast(vmv.venda_sk as integer) as venda_id
             , mv.motivo_venda_nome
             , mv.motivo_venda_tipo
         from

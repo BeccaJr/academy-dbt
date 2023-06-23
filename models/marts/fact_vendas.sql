@@ -1,54 +1,97 @@
 with
-    vendas as (
+    cartoes as (
         select
-            venda_id
-            , cliente_id
-            , endereco_id
-            , cartao_id
-            , venda_data
-            , venda_status
+            *
         from
-            {{ ref('stg_adw__vendas') }}
+            {{ ref('dim_cartoes') }}
     ),
 
-    venda_detalhes as (
+    clientes as (
         select
-            venda_detalhe_id
-            , venda_id
-            , produto_id
-            , venda_qtd
-            , preco_unitario
+            *
         from
-            {{ ref('stg_adw__venda_detalhes') }}
+            {{ ref('dim_clientes') }}
+    ),
+
+    datas as (
+        select
+            *
+        from
+            {{ ref('dim_datas') }}
+    ),
+
+    enderecos as (
+        select
+            *
+        from
+            {{ ref('dim_enderecos') }}
+    ),
+
+    motivo_vendas as (
+        select
+            *
+        from
+            {{ ref('dim_motivo_vendas') }}
+    ),
+
+    produtos as (
+        select
+            *
+        from
+            {{ ref('dim_produtos') }}
+    ),
+
+    vendas_detalhes as (
+        select
+            *
+        from
+            {{ ref('int_vendas__venda_detalhes') }}
     ),
 
     join_tabelas as (
         select
             vd.venda_detalhe_id
             , vd.venda_id
-            , vd.produto_id
-            , v.cliente_id
-            , v.endereco_id
-            , v.cartao_id
+            , mv.venda_sk as motivo_venda_sk
+            , p.produto_sk
+            , cl.cliente_sk
+            , e.endereco_sk
+            , c.cartao_sk
+            , d.data_sk
+            , p.produto_id
+            , mv.motivo_venda_nome
+            , d.data
             , vd.venda_qtd
             , vd.preco_unitario
-            , v.venda_data
-            , v.venda_status
-        from
-            venda_detalhes vd
-        inner join vendas v
-            on vd.venda_id = v.venda_id
+            , vd.venda_status
+        from 
+            vendas_detalhes vd
+        left join cartoes c
+            on vd.cartao_id = c.cartao_id
+        left join clientes cl
+            on vd.cliente_id = cl.cliente_id
+        left join datas d
+            on vd.venda_data = d.data
+        left join enderecos e
+            on vd.endereco_id = e.endereco_id
+        left join motivo_vendas mv
+            on vd.venda_id = mv.venda_id
+        left join produtos p
+            on vd.produto_id = p.produto_id
+
     ),
 
     transformacoes as (
-        select
-            farm_fingerprint(cast(venda_detalhe_id as string)) as venda_detalhe_sk
+        select distinct
+            farm_fingerprint(concat(cast(venda_detalhe_id as string), cast(produto_id as string))) as venda_detalhe_sk
             , farm_fingerprint(cast(venda_id as string)) as venda_sk
-            , farm_fingerprint(cast(produto_id as string)) as produto_sk
-            , farm_fingerprint(cast(cliente_id as string)) as cliente_sk
-            , farm_fingerprint(cast(endereco_id as string)) as endereco_sk
-            , farm_fingerprint(cast(cartao_id as string)) as cartao_sk
-            , farm_fingerprint(cast(venda_data as string)) as data_sk
+            , motivo_venda_sk
+            , produto_sk
+            , cliente_sk
+            , endereco_sk
+            , cartao_sk
+            , data_sk
+            , data
             , venda_qtd
             , preco_unitario
             , venda_status

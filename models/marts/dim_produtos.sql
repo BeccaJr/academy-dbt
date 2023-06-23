@@ -37,6 +37,7 @@ with
     transformacoes as (
         select
             farm_fingerprint(cast(p.produto_id as string)) as produto_sk
+            , cast(p.produto_id as integer) as produto_id
             , p.produto_nome
             , csc.subcategoria_nome
             , csc.categoria_nome
